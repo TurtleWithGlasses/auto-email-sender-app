@@ -22,7 +22,7 @@ def login():
         root.after(10, root.grid)
         compose_page.pack()
         label9.grid_remove()
-        root.afer(10, root.grid)
+        root.after(10, root.grid)
 
 
 def hide_login_label():
@@ -44,11 +44,11 @@ def send_mail():
             server.sendmail(username, receiver, msg)
             label9.grid()
             label9["text"] = "Mail sent successfully"
-            root.afer(10, label9.grid)
+            root.after(10, label9.grid)
         except Exception as e:
             label9.grid()
             label9["text"] = "Error in sending you email"
-            root.afer(10, label9.grid)
+            root.after(10, label9.grid)
 
 
 def logout():
@@ -87,6 +87,31 @@ def validate_login():
         else:
             return True
 
+
+def validate_message():
+    email_text = str(entry3.get())
+    sub_text = str(entry4.get())
+    msg_text = str(entry5.get())
+
+    if email_text == "" or sub_text == "" or msg_text == "":
+        label9.grid()
+        label9["text"] = "Fill in all the places"
+        root.after(10, root.grid)
+        return False
+    else:
+        EMAIL_REGEX = re.compile(r"[^@\s]+@[^@\s]+\.[a-zA-Z0-9]+$")
+        if not EMAIL_REGEX.match(email_text):
+            label9.grid()
+            label9["text"] = "Enter a valid email address"
+            root.after(10, root.grid)
+            return False
+        elif (len(sub_text) < 3) or (len(msg_text) < 3):
+            label9.grid()
+            label9["text"] = "Enter at least 3 characters"
+            root.after(10, root.grid)
+            return False
+        else:
+            return True
 
 
 root = Tk()
