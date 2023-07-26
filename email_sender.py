@@ -31,6 +31,27 @@ def hide_login_label():
     root.after(10, root.grid)
 
 
+def send_mail():
+    if validate_message():
+        label9.grid_remove()
+        root.after(10, root.grid)
+        receiver = str(entry3.get())
+        subject = str(entry4.get())
+        msg_body = str(entry5.get())
+        msg = f"From {username}\n{receiver}\n{subject}\n{msg_body}"
+
+        try:
+            server.sendmail(username, receiver, msg)
+            label9.grid()
+            label9["text"] = "Mail sent successfully!"
+            root.afer(10, label9.grid)
+        except Exception as e:
+            label9.grid()
+            label9["text"] = "Error in sending you email.."
+            root.afer(10, label9.grid)
+            
+
+
 root = Tk()
 root.title("Email Application")
 
