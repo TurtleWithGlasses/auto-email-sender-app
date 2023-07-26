@@ -43,13 +43,50 @@ def send_mail():
         try:
             server.sendmail(username, receiver, msg)
             label9.grid()
-            label9["text"] = "Mail sent successfully!"
+            label9["text"] = "Mail sent successfully"
             root.afer(10, label9.grid)
         except Exception as e:
             label9.grid()
-            label9["text"] = "Error in sending you email.."
+            label9["text"] = "Error in sending you email"
             root.afer(10, label9.grid)
-            
+
+
+def logout():
+    try:
+        server.quit()
+        compose_page.pack_forget()
+        login_page.pack()
+        label4.grid()
+        label4["text"] = "Logged out successfully"
+        button2.grid_remove()
+        main_page.pack()
+        password_entry.delete(0, END)
+        root.after(10, root.grid)
+    except Exception as e:
+        label4["text"] = "Error in logout"
+
+
+def validate_login():
+    email_text = str(email_entry.get())
+    pass_text = str(password_entry.get())
+
+    if (email_text == "") or (pass_text == ""):
+        login_page.pack()
+        label4.grid()
+        label4["text"] = "Fill all the empty fields"
+        button2.grid_remove()
+        root.after(10, root.grid)
+        return False
+    else:
+        EMAIL_REGEX = re.compile(r"[^@\s]+@[^@\s]+\.[a-zA-Z0-9]+$")
+        if not EMAIL_REGEX.match(email_text):
+            login_page.pack()
+            label4.grid()
+            label4["text"] = "Enter a valid email address"
+            return False
+        else:
+            return True
+
 
 
 root = Tk()
